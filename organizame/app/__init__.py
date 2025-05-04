@@ -13,7 +13,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     
     # Inicializar banco de dados
-    init_db()
+    #init_db()
     
     # Registrar blueprints
     from app.controllers.main import main as main_blueprint
@@ -31,9 +31,9 @@ def create_app(config_class=Config):
     from app.controllers.consultas import consultas as consultas_blueprint
     app.register_blueprint(consultas_blueprint)
     
-    @login_manager.user_loader
-    def load_user(user_id):
-        from app.models.usuario import Usuario
-        return Usuario.get_by_id(user_id)
+    #@login_manager.user_loader
+    #def load_user(user_id):
+    #    from app.models.usuario import Usuario
+    #    return Usuario.get_by_id(user_id)
     
     return app 
