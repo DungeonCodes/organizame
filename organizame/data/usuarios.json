@@ -4,5 +4,11 @@
         "nome": "admin",
         "email": "admin@gmail.com",
         "senha_hash": "pbkdf2:sha256:260000$8GrjcatD3ZElIkWY$0532c73220165512ab28327a2608843044202b27bd5fe8fd55fc13528035ba5d"
+    },
+    {
+        "id": 2,
+        "nome": "Rafael Martins",
+        "email": "rafa5186@hotmail.com",
+        "senha_hash": "pbkdf2:sha256:260000$pliyRJYDXVLCEyDj$2f4097e025645469825a7afc88bc6e490c3f15bbfe0b26d192edb35d4248d332"
     }
 ]
