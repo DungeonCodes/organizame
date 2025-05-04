@@ -1,0 +1,8 @@
+[
+    {
+        "id": 1,
+        "nome": "admin",
+        "email": "admin@gmail.com",
+        "senha_hash": "pbkdf2:sha256:260000$8GrjcatD3ZElIkWY$0532c73220165512ab28327a2608843044202b27bd5fe8fd55fc13528035ba5d"
+    }
+]

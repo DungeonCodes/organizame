@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block title %}Prontuários - Sistema de Prontuários
+UBS{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Prontuários</h2>
+  <a href="{{ url_for('pacientes.index') }}" class="btn btn-success"
+    >Selecionar Paciente</a
+  >
+</div>
+
+<div class="card mb-4">
+  <div class="card-header bg-light">
+    <h5 class="mb-0">Buscar Prontuários</h5>
+  </div>
+  <div class="card-body">
+    <form
+      action="{{ url_for('prontuarios.buscar') }}"
+      method="GET"
+      class="row g-3"
+    >
+      <div class="col-md-10">
+        <label for="cartao_sus" class="form-label">Cartão SUS</label>
+        <input
+          type="text"
+          class="form-control"
+          id="cartao_sus"
+          name="cartao_sus"
+          placeholder="Digite o número do cartão SUS"
+          required
+        />
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-success w-100">Buscar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if prontuarios %}
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Paciente</th>
+        <th>Cartão SUS</th>
+        <th>Data de Criação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prontuario in prontuarios %}
+      <tr>
+        <td>{{ prontuario.paciente.nome }}</td>
+        <td>{{ prontuario.paciente.cartao_sus }}</td>
+        <td>{{ prontuario.data_criacao }}</td>
+        <td>
+          <a
+            href="{{ url_for('prontuarios.view', id=prontuario.id) }}"
+            class="btn btn-sm btn-success"
+            >Ver</a
+          >
+          <a
+            href="{{ url_for('prontuarios.edit', id=prontuario.id) }}"
+            class="btn btn-sm btn-warning"
+            >Editar</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-info">Nenhum prontuário encontrado.</div>
+{% endif %} {% endblock %}

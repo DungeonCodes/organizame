@@ -1,0 +1,155 @@
+{% extends 'base.html' %} {% block title %}Prontuário de {{ paciente.nome }} -
+Sistema de Prontuários UBS{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Prontuário</h2>
+  <div>
+    <a
+      href="{{ url_for('prontuarios.edit', id=prontuario.id) }}"
+      class="btn btn-warning"
+      >Editar</a
+    >
+    <a
+      href="{{ url_for('pacientes.view', id=paciente.id) }}"
+      class="btn btn-secondary"
+      >Voltar ao Paciente</a
+    >
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Dados do Paciente</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Nome:</strong> {{ paciente.nome }}</p>
+        <p><strong>Cartão SUS:</strong> {{ paciente.cartao_sus }}</p>
+      </div>
+      <div class="col-md-6">
+        <p>
+          <strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}
+        </p>
+        <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div
+    class="card-header bg-success text-white d-flex justify-content-between align-items-center"
+  >
+    <h5 class="mb-0">Dados do Prontuário</h5>
+    <small>Criado em: {{ prontuario.data_criacao }}</small>
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <h6>Histórico Médico</h6>
+      <p class="border p-2 rounded bg-light">
+        {{ prontuario.historico_medico }}
+      </p>
+    </div>
+    <div class="mb-3">
+      <h6>Alergias</h6>
+      <p class="border p-2 rounded bg-light">
+        {{ prontuario.alergias or 'Nenhuma alergia registrada' }}
+      </p>
+    </div>
+    <div class="mb-3">
+      <h6>Medicamentos de Uso Contínuo</h6>
+      <p class="border p-2 rounded bg-light">
+        {{ prontuario.medicamentos_continuos or 'Nenhum medicamento contínuo
+        registrado' }}
+      </p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <form
+      action="{{ url_for('prontuarios.delete', id=prontuario.id) }}"
+      method="POST"
+      onsubmit="return confirm('Tem certeza que deseja excluir este prontuário?');"
+    >
+      <button type="submit" class="btn btn-danger">Excluir Prontuário</button>
+    </form>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Consultas</h3>
+  <a
+    href="{{ url_for('consultas.create', prontuario_id=prontuario.id) }}"
+    class="btn btn-success"
+    >Nova Consulta</a
+  >
+</div>
+
+{% if consultas %}
+<div class="accordion" id="consultasAccordion">
+  {% for consulta in consultas %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ consulta.id }}">
+      <button
+        class="accordion-button collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse{{ consulta.id }}"
+      >
+        <div class="d-flex justify-content-between w-100 me-3">
+          <span>Consulta em {{ consulta.data_consulta }}</span>
+          <span>Médico: {{ consulta.medico }}</span>
+        </div>
+      </button>
+    </h2>
+    <div
+      id="collapse{{ consulta.id }}"
+      class="accordion-collapse collapse"
+      aria-labelledby="heading{{ consulta.id }}"
+      data-bs-parent="#consultasAccordion"
+    >
+      <div class="accordion-body">
+        <div class="mb-2">
+          <h6>Sintomas</h6>
+          <p>{{ consulta.sintomas }}</p>
+        </div>
+        <div class="mb-2">
+          <h6>Diagnóstico</h6>
+          <p>{{ consulta.diagnostico }}</p>
+        </div>
+        <div class="mb-2">
+          <h6>Prescrição</h6>
+          <p>{{ consulta.prescricao }}</p>
+        </div>
+        <div class="mb-2">
+          <h6>Observações</h6>
+          <p>{{ consulta.observacoes or 'Nenhuma observação' }}</p>
+        </div>
+        <div class="d-flex gap-2">
+          <a
+            href="{{ url_for('consultas.view', id=consulta.id) }}"
+            class="btn btn-sm btn-info"
+            >Ver Detalhes</a
+          >
+          <a
+            href="{{ url_for('consultas.edit', id=consulta.id) }}"
+            class="btn btn-sm btn-warning"
+            >Editar</a
+          >
+          <form
+            action="{{ url_for('consultas.delete', id=consulta.id) }}"
+            method="POST"
+            onsubmit="return confirm('Tem certeza que deseja excluir esta consulta?');"
+          >
+            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+  Este prontuário não possui consultas registradas.
+</div>
+{% endif %} {% endblock %}

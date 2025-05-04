@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block title %}Novo Prontuário - Sistema de
+Prontuários UBS{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Novo Prontuário</h2>
+  <a
+    href="{{ url_for('pacientes.view', id=paciente.id) }}"
+    class="btn btn-secondary"
+    >Voltar</a
+  >
+</div>
+
+<div class="card mb-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Dados do Paciente</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Nome:</strong> {{ paciente.nome }}</p>
+        <p><strong>Cartão SUS:</strong> {{ paciente.cartao_sus }}</p>
+      </div>
+      <div class="col-md-6">
+        <p>
+          <strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}
+        </p>
+        <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Dados do Prontuário</h5>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="mb-3">
+        <label for="historico_medico" class="form-label"
+          >Histórico Médico</label
+        >
+        <textarea
+          class="form-control"
+          id="historico_medico"
+          name="historico_medico"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="alergias" class="form-label">Alergias</label>
+        <textarea
+          class="form-control"
+          id="alergias"
+          name="alergias"
+          rows="2"
+        ></textarea>
+        <div class="form-text">Deixe em branco caso não possua alergias.</div>
+      </div>
+      <div class="mb-3">
+        <label for="medicamentos_continuos" class="form-label"
+          >Medicamentos de Uso Contínuo</label
+        >
+        <textarea
+          class="form-control"
+          id="medicamentos_continuos"
+          name="medicamentos_continuos"
+          rows="2"
+        ></textarea>
+        <div class="form-text">
+          Deixe em branco caso não utilize medicamentos contínuos.
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success">Criar Prontuário</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% block title %}{{ paciente.nome }} - Sistema de
+Prontuários UBS{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Dados do Paciente</h2>
+  <div>
+    <a
+      href="{{ url_for('pacientes.edit', id=paciente.id) }}"
+      class="btn btn-warning"
+      >Editar</a
+    >
+    <a href="{{ url_for('pacientes.index') }}" class="btn btn-secondary"
+      >Voltar</a
+    >
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">{{ paciente.nome }}</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Cartão SUS:</strong> {{ paciente.cartao_sus }}</p>
+        <p>
+          <strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+        <p><strong>Endereço:</strong> {{ paciente.endereco }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <form
+      action="{{ url_for('pacientes.delete', id=paciente.id) }}"
+      method="POST"
+      onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');"
+    >
+      <button type="submit" class="btn btn-danger">Excluir Paciente</button>
+    </form>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Prontuários</h3>
+  <a
+    href="{{ url_for('prontuarios.create', paciente_id=paciente.id) }}"
+    class="btn btn-success"
+    >Novo Prontuário</a
+  >
+</div>
+
+{% if prontuarios %}
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Data de Criação</th>
+        <th>Histórico Médico</th>
+        <th>Alergias</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prontuario in prontuarios %}
+      <tr>
+        <td>{{ prontuario.data_criacao }}</td>
+        <td>{{ prontuario.historico_medico|truncate(50) }}</td>
+        <td>{{ prontuario.alergias|truncate(30) }}</td>
+        <td>
+          <a
+            href="{{ url_for('prontuarios.view', id=prontuario.id) }}"
+            class="btn btn-sm btn-success"
+            >Ver</a
+          >
+          <a
+            href="{{ url_for('prontuarios.edit', id=prontuario.id) }}"
+            class="btn btn-sm btn-warning"
+            >Editar</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-info">Este paciente não possui prontuários.</div>
+{% endif %} {% endblock %}

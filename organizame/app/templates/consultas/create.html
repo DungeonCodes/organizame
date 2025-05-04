@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% block title %}Nova Consulta - Sistema de
+Prontuários UBS{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Nova Consulta</h2>
+  <a
+    href="{{ url_for('prontuarios.view', id=prontuario.id) }}"
+    class="btn btn-secondary"
+    >Voltar</a
+  >
+</div>
+
+<div class="card mb-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Dados do Paciente</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Nome:</strong> {{ paciente.nome }}</p>
+        <p><strong>Cartão SUS:</strong> {{ paciente.cartao_sus }}</p>
+      </div>
+      <div class="col-md-6">
+        <p>
+          <strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}
+        </p>
+        <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Dados da Consulta</h5>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="mb-3">
+        <label for="medico" class="form-label">Médico Responsável</label>
+        <input
+          type="text"
+          class="form-control"
+          id="medico"
+          name="medico"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="sintomas" class="form-label">Sintomas</label>
+        <textarea
+          class="form-control"
+          id="sintomas"
+          name="sintomas"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="diagnostico" class="form-label">Diagnóstico</label>
+        <textarea
+          class="form-control"
+          id="diagnostico"
+          name="diagnostico"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="prescricao" class="form-label">Prescrição</label>
+        <textarea
+          class="form-control"
+          id="prescricao"
+          name="prescricao"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="observacoes" class="form-label">Observações</label>
+        <textarea
+          class="form-control"
+          id="observacoes"
+          name="observacoes"
+          rows="2"
+        ></textarea>
+        <div class="form-text">Opcional</div>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success">
+          Registrar Consulta
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
